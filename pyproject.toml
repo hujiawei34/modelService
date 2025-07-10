@@ -1,0 +1,107 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qwen-model-service"
+version = "1.0.0"
+description = "基于 FastAPI 的 Qwen 语言模型服务"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "ModelService Team"},
+]
+keywords = ["qwen", "llm", "fastapi", "ai", "model-service"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Framework :: FastAPI",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "torch>=2.0.0",
+    "transformers>=4.37.0",
+    "accelerate>=0.26.0",
+    "tiktoken",
+    "einops",
+    "transformers_stream_generator>=0.0.4",
+    "scipy",
+    "peft>=0.4.0",
+    "huggingface_hub",
+    "modelscope",
+    "psutil",
+    "pynvml",
+    "fastapi>=0.100.0",
+    "uvicorn[standard]>=0.23.0",
+    "sseclient-py",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio",
+    "black",
+    "flake8",
+    "mypy",
+    "pre-commit",
+]
+
+[project.urls]
+Homepage = "https://github.com/your-org/qwen-model-service"
+Documentation = "https://github.com/your-org/qwen-model-service/blob/main/README.md"
+Repository = "https://github.com/your-org/qwen-model-service"
+Issues = "https://github.com/your-org/qwen-model-service/issues"
+
+[project.scripts]
+qwen-service = "model_service.start_service:main"
+
+[tool.setuptools.packages.find]
+where = ["src/py"]
+
+[tool.setuptools.package-dir]
+"" = "src/py"
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+  | models
+)/
+'''
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+exclude = [
+    "models/",
+    "build/",
+    "dist/",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+asyncio_mode = "auto"
