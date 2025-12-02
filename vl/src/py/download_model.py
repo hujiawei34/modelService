@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 def download_model():
-    """Download the Qwen3-VL-4B-Instruct-FP8 model."""
+    """Download the Qwen2-VL-2B-Instruct-AWQ model."""
     try:
         from huggingface_hub import snapshot_download
         import torch
